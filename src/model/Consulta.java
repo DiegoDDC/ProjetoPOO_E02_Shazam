@@ -113,13 +113,3 @@ public class Consulta implements Agendavel, Exportavel {
                 + " | Tipo: " + tipo + " | Status: " + status;
     }
 }
-
-feat: implementa entidade Consulta com controle de agendamento
-
-Cria a classe Consulta implementando as interfaces Agendavel e Exportavel.
-A entidade gerencia os dados da marcação e transições de estado de 
-atendimento (agendar, cancelar, remarcar, realizar), além de fornecer 
-sobrecarga de construtores para facilitar a instanciação e persistência.
-
-Implementando métodos de exportação de dados e exibição de resumo, permitindo integração com outros módulos do sistema, 
-como relatórios e histórico de consultas. Usando encapsulamento para proteger os atributos e fornecer métodos de acesso e modificação.
