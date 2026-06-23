@@ -2,6 +2,9 @@ package model;
 
 public class Consulta implements Agendavel, Exportavel {
 
+    private static final String TIPO_PADRAO = "inicial";
+    private static final String STATUS_PADRAO = "agendada";
+
     private String cpfPaciente;
     private String nomeProfissional;
     private String data;
@@ -9,33 +12,21 @@ public class Consulta implements Agendavel, Exportavel {
     private String tipo;
     private String status;
 
-    public Consulta(String cpfPaciente, String nomeProfissional, String data, String horario) {
-        this.cpfPaciente = cpfPaciente;
-        this.nomeProfissional = nomeProfissional;
-        this.data = data;
-        this.horario = horario;
-        this.tipo = "inicial";
-        this.status = "agendada";
-    }
-
-    public Consulta(String cpfPaciente, String nomeProfissional, String data,
-                    String horario, String tipo) {
-        this.cpfPaciente = cpfPaciente;
-        this.nomeProfissional = nomeProfissional;
-        this.data = data;
-        this.horario = horario;
-        this.tipo = tipo;
-        this.status = "agendada";
-    }
-
-    public Consulta(String cpfPaciente, String nomeProfissional, String data,
-                    String horario, String tipo, String status) {
+    public Consulta(String cpfPaciente, String nomeProfissional, String data, String horario, String tipo, String status) {
         this.cpfPaciente = cpfPaciente;
         this.nomeProfissional = nomeProfissional;
         this.data = data;
         this.horario = horario;
         this.tipo = tipo;
         this.status = status;
+    }
+
+    public Consulta(String cpfPaciente, String nomeProfissional, String data, String horario, String tipo) {
+        this(cpfPaciente, nomeProfissional, data, horario, tipo, STATUS_PADRAO);
+    }
+
+    public Consulta(String cpfPaciente, String nomeProfissional, String data, String horario) {
+        this(cpfPaciente, nomeProfissional, data, horario, TIPO_PADRAO, STATUS_PADRAO);
     }
 
     public String getCpfPaciente() { 
@@ -78,7 +69,7 @@ public class Consulta implements Agendavel, Exportavel {
 
     @Override
     public void agendar() {
-        this.status = "agendada";
+        this.status = STATUS_PADRAO;
     }
 
     @Override
@@ -102,14 +93,24 @@ public class Consulta implements Agendavel, Exportavel {
 
     @Override
     public String exportarDados() {
-        return "[CONSULTA] CPF: " + cpfPaciente + " | Prof: " + nomeProfissional
-                + " | Data: " + data + " | Hora: " + horario
-                + " | Tipo: " + tipo + " | Status: " + status;
+        return "[CONSULTA] " + formatarDados();
     }
 
     public String exibirResumo() {
-        return "Paciente(CPF): " + cpfPaciente + " | Prof: " + nomeProfissional
-                + " | Data: " + data + " | Hora: " + horario
-                + " | Tipo: " + tipo + " | Status: " + status;
+        return "Paciente(CPF): " + cpfPaciente 
+                + " | Prof: " + nomeProfissional
+                + " | Data: " + data 
+                + " | Hora: " + horario
+                + " | Tipo: " + tipo 
+                + " | Status: " + status;
+    }
+
+    private String formatarDados() {
+        return "CPF: " + cpfPaciente 
+                + " | Prof: " + nomeProfissional
+                + " | Data: " + data 
+                + " | Hora: " + horario
+                + " | Tipo: " + tipo 
+                + " | Status: " + status;
     }
 }
