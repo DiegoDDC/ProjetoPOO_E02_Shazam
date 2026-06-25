@@ -24,4 +24,32 @@ public class AgendamentoConsultaProfissional {
                 System.out.println("Erro: Paciente inativo.");
                 return;
             }
-  
+            
+            System.out.print("Nome do Profissional: ");
+            String nomeProf = sc.nextLine();
+            Profissional prof = repositorio.buscarProfissional(nomeProf);
+            
+            System.out.print("Data (DD/MM/AAAA): ");
+            String data = sc.nextLine();
+            
+            System.out.print("Horario (HH:MM): ");
+            String horario = sc.nextLine();
+            
+            System.out.print("Tipo (Inicial/Retorno): ");
+            String tipo = sc.nextLine();
+            
+            for (Consulta c : repositorio.getConsultas()) {
+                if (c.getNomeProfissional().equals(nomeProf) && c.getData().equals(data) && c.getHorario().equals(horario) && c.getStatus().equals("agendada")) {
+                    throw new HorarioIndisponivelException("Horario indisponivel para este profissional.");
+                }
+            }
+
+            Consulta consulta = new Consulta(cpf, nomeProf, data, horario, tipo);
+            repositorio.getConsultas().add(consulta);
+            System.out.println("Consulta agendada com sucesso!");
+            
+        } catch (PacienteNaoEncontradoException | ProfissionalNaoEncontradoException | HorarioIndisponivelException e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+}
