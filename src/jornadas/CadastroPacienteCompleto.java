@@ -30,3 +30,33 @@ public class CadastroPacienteCompleto {
                 System.out.println("Entrada invalida. Digite um numero.");
             }
         }
+        
+        System.out.print("Telefone: ");
+        String tel = sc.nextLine();
+        
+        System.out.print("Possui convenio? (1-Sim / 2-Nao): ");
+        int convOpt = 2;
+        try {
+            convOpt = Integer.parseInt(sc.nextLine());
+        } catch (Exception e) {}
+        
+        Convenio conv = null;
+        
+        if (convOpt == 1) {
+            System.out.print("Nome do Convenio: ");
+            String nomeConv = sc.nextLine();
+            conv = repositorio.buscarConvenioPorNome(nomeConv);
+            if (conv == null) {
+                System.out.println("Convenio não encontrado. Paciente ficara sem convenio.");
+            }
+        }
+
+        try {
+            Paciente p = (conv != null) ? new Paciente(nome, cpf, idade, tel, conv) : new Paciente(nome, cpf, idade, tel);
+            repositorio.adicionarPaciente(p);
+            System.out.println("Paciente cadastrado com sucesso!");
+        } catch (PacienteNaoEncontradoException e) {
+            System.out.println("Erro (Duplicidade): " + e.getMessage());
+        }
+    }
+}
